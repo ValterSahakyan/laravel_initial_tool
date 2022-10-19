@@ -1,0 +1,33 @@
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./resources/assets/core/js/custom/documentation/base/rotate.js":
+/*!**********************************************************************!*\
+  !*** ./resources/assets/core/js/custom/documentation/base/rotate.js ***!
+  \**********************************************************************/
+/***/ (() => {
+
+eval(" // Class definition\n\nvar KTBaseRotateDemos = function () {\n  // Private functions\n  var _example1 = function _example1(element) {\n    // Element to indecate\n    var button = document.querySelector(\"#kt_button_1\"); // Handle button click event\n\n    button.addEventListener(\"click\", function () {\n      button.classList.toggle(\"active\");\n    });\n  };\n\n  var _example2 = function _example2(element) {\n    // Element to indecate\n    var button = document.querySelector(\"#kt_button_2\"); // Handle button click event\n\n    button.addEventListener(\"click\", function () {\n      button.classList.toggle(\"active\");\n    });\n  };\n\n  var _example3 = function _example3(element) {\n    // Element to indecate\n    var button = document.querySelector(\"#kt_button_3\"); // Handle button click event\n\n    button.addEventListener(\"click\", function () {\n      button.classList.toggle(\"active\");\n    });\n  };\n\n  return {\n    // Public Functions\n    init: function init(element) {\n      _example1();\n\n      _example2();\n\n      _example3();\n    }\n  };\n}(); // On document ready\n\n\nKTUtil.onDOMContentLoaded(function () {\n  KTBaseRotateDemos.init();\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvYXNzZXRzL2NvcmUvanMvY3VzdG9tL2RvY3VtZW50YXRpb24vYmFzZS9yb3RhdGUuanMuanMiLCJtYXBwaW5ncyI6IkNBRUE7O0FBQ0EsSUFBSUEsaUJBQWlCLEdBQUcsWUFBVztBQUMvQjtBQUNBLE1BQUlDLFNBQVMsR0FBRyxTQUFaQSxTQUFZLENBQVNDLE9BQVQsRUFBa0I7QUFDOUI7QUFDQSxRQUFJQyxNQUFNLEdBQUdDLFFBQVEsQ0FBQ0MsYUFBVCxDQUF1QixjQUF2QixDQUFiLENBRjhCLENBSTlCOztBQUNBRixJQUFBQSxNQUFNLENBQUNHLGdCQUFQLENBQXdCLE9BQXhCLEVBQWlDLFlBQVc7QUFDeENILE1BQUFBLE1BQU0sQ0FBQ0ksU0FBUCxDQUFpQkMsTUFBakIsQ0FBd0IsUUFBeEI7QUFDSCxLQUZEO0FBR0gsR0FSRDs7QUFVQSxNQUFJQyxTQUFTLEdBQUcsU0FBWkEsU0FBWSxDQUFTUCxPQUFULEVBQWtCO0FBQzlCO0FBQ0EsUUFBSUMsTUFBTSxHQUFHQyxRQUFRLENBQUNDLGFBQVQsQ0FBdUIsY0FBdkIsQ0FBYixDQUY4QixDQUk5Qjs7QUFDQUYsSUFBQUEsTUFBTSxDQUFDRyxnQkFBUCxDQUF3QixPQUF4QixFQUFpQyxZQUFXO0FBQ3hDSCxNQUFBQSxNQUFNLENBQUNJLFNBQVAsQ0FBaUJDLE1BQWpCLENBQXdCLFFBQXhCO0FBQ0gsS0FGRDtBQUdILEdBUkQ7O0FBVUEsTUFBSUUsU0FBUyxHQUFHLFNBQVpBLFNBQVksQ0FBU1IsT0FBVCxFQUFrQjtBQUM5QjtBQUNBLFFBQUlDLE1BQU0sR0FBR0MsUUFBUSxDQUFDQyxhQUFULENBQXVCLGNBQXZCLENBQWIsQ0FGOEIsQ0FJOUI7O0FBQ0FGLElBQUFBLE1BQU0sQ0FBQ0csZ0JBQVAsQ0FBd0IsT0FBeEIsRUFBaUMsWUFBVztBQUN4Q0gsTUFBQUEsTUFBTSxDQUFDSSxTQUFQLENBQWlCQyxNQUFqQixDQUF3QixRQUF4QjtBQUNILEtBRkQ7QUFHSCxHQVJEOztBQVdBLFNBQU87QUFDSDtBQUNBRyxJQUFBQSxJQUFJLEVBQUUsY0FBU1QsT0FBVCxFQUFrQjtBQUNwQkQsTUFBQUEsU0FBUzs7QUFDVFEsTUFBQUEsU0FBUzs7QUFDVEMsTUFBQUEsU0FBUztBQUNaO0FBTkUsR0FBUDtBQVFILENBekN1QixFQUF4QixDLENBMkNBOzs7QUFDQUUsTUFBTSxDQUFDQyxrQkFBUCxDQUEwQixZQUFXO0FBQ2pDYixFQUFBQSxpQkFBaUIsQ0FBQ1csSUFBbEI7QUFDSCxDQUZEIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL2Fzc2V0cy9jb3JlL2pzL2N1c3RvbS9kb2N1bWVudGF0aW9uL2Jhc2Uvcm90YXRlLmpzP2E5ZmQiXSwic291cmNlc0NvbnRlbnQiOlsiXCJ1c2Ugc3RyaWN0XCI7XG5cbi8vIENsYXNzIGRlZmluaXRpb25cbnZhciBLVEJhc2VSb3RhdGVEZW1vcyA9IGZ1bmN0aW9uKCkge1xuICAgIC8vIFByaXZhdGUgZnVuY3Rpb25zXG4gICAgdmFyIF9leGFtcGxlMSA9IGZ1bmN0aW9uKGVsZW1lbnQpIHtcbiAgICAgICAgLy8gRWxlbWVudCB0byBpbmRlY2F0ZVxuICAgICAgICB2YXIgYnV0dG9uID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIiNrdF9idXR0b25fMVwiKTtcblxuICAgICAgICAvLyBIYW5kbGUgYnV0dG9uIGNsaWNrIGV2ZW50XG4gICAgICAgIGJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKFwiY2xpY2tcIiwgZnVuY3Rpb24oKSB7XG4gICAgICAgICAgICBidXR0b24uY2xhc3NMaXN0LnRvZ2dsZShcImFjdGl2ZVwiKTsgICAgICAgICAgICAgIFxuICAgICAgICB9KTtcbiAgICB9XG5cbiAgICB2YXIgX2V4YW1wbGUyID0gZnVuY3Rpb24oZWxlbWVudCkge1xuICAgICAgICAvLyBFbGVtZW50IHRvIGluZGVjYXRlXG4gICAgICAgIHZhciBidXR0b24gPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiI2t0X2J1dHRvbl8yXCIpO1xuXG4gICAgICAgIC8vIEhhbmRsZSBidXR0b24gY2xpY2sgZXZlbnRcbiAgICAgICAgYnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoXCJjbGlja1wiLCBmdW5jdGlvbigpIHtcbiAgICAgICAgICAgIGJ1dHRvbi5jbGFzc0xpc3QudG9nZ2xlKFwiYWN0aXZlXCIpOyAgICAgICAgICAgICAgIFxuICAgICAgICB9KTtcbiAgICB9XG5cbiAgICB2YXIgX2V4YW1wbGUzID0gZnVuY3Rpb24oZWxlbWVudCkge1xuICAgICAgICAvLyBFbGVtZW50IHRvIGluZGVjYXRlXG4gICAgICAgIHZhciBidXR0b24gPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiI2t0X2J1dHRvbl8zXCIpO1xuXG4gICAgICAgIC8vIEhhbmRsZSBidXR0b24gY2xpY2sgZXZlbnRcbiAgICAgICAgYnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoXCJjbGlja1wiLCBmdW5jdGlvbigpIHtcbiAgICAgICAgICAgIGJ1dHRvbi5jbGFzc0xpc3QudG9nZ2xlKFwiYWN0aXZlXCIpOyAgICAgICAgICAgICAgXG4gICAgICAgIH0pO1xuICAgIH1cbiAgICBcblxuICAgIHJldHVybiB7XG4gICAgICAgIC8vIFB1YmxpYyBGdW5jdGlvbnNcbiAgICAgICAgaW5pdDogZnVuY3Rpb24oZWxlbWVudCkge1xuICAgICAgICAgICAgX2V4YW1wbGUxKCk7XG4gICAgICAgICAgICBfZXhhbXBsZTIoKTtcbiAgICAgICAgICAgIF9leGFtcGxlMygpO1xuICAgICAgICB9XG4gICAgfTtcbn0oKTtcblxuLy8gT24gZG9jdW1lbnQgcmVhZHlcbktUVXRpbC5vbkRPTUNvbnRlbnRMb2FkZWQoZnVuY3Rpb24oKSB7XG4gICAgS1RCYXNlUm90YXRlRGVtb3MuaW5pdCgpO1xufSk7Il0sIm5hbWVzIjpbIktUQmFzZVJvdGF0ZURlbW9zIiwiX2V4YW1wbGUxIiwiZWxlbWVudCIsImJ1dHRvbiIsImRvY3VtZW50IiwicXVlcnlTZWxlY3RvciIsImFkZEV2ZW50TGlzdGVuZXIiLCJjbGFzc0xpc3QiLCJ0b2dnbGUiLCJfZXhhbXBsZTIiLCJfZXhhbXBsZTMiLCJpbml0IiwiS1RVdGlsIiwib25ET01Db250ZW50TG9hZGVkIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/assets/core/js/custom/documentation/base/rotate.js\n");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval-source-map devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./resources/assets/core/js/custom/documentation/base/rotate.js"]();
+/******/ 	
+/******/ })()
+;

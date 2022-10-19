@@ -1,0 +1,13 @@
+read libraries
+read library mmff mute
+#
+call _macro    test
+call _cheminfo test
+call _ligedit  test
+#
+if (Exist(s_icmhome + "nnInterMod.inm")) then
+  read binary s_icmhome + "nnInterMod.inm"
+  set property nnInterMod show delete write off
+endif
+#
+display hydrogen

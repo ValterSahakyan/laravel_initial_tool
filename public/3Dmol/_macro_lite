@@ -1,0 +1,408 @@
+macro cool auto rs_ (a_) l_static (no) l_site (no)
+ l_info=no
+ l_commands = no
+ GRAPHICS.l_redraw = no
+# if i_style >= 1 comboDisplayStyle = i_style
+ if Nof(object)==0 return
+ if(Nof(Obj(rs_))==0) return  # should fix double click on an .sdf file
+ if Nof(plane)==0 set plane 1
+#
+ display restore rs_ & a_*.G # selection of prev. stored ds,kr
+ if   Nof( Mol(rs_) & Mol(a_*.//DD)) == 0 store display delete Mol(rs_)
+ rs_ = rs_ & a_*.!G
+
+ undisplay rs_
+ #all the first ds should be static if l_static'
+ if (Nof(Res(rs_))>5000 | Nof( Res(rs_) & a_*.N) > 1000 ) then
+   display rs_ wire
+   color molecule rs_
+ else
+   make bond chain rs_ & a_CATRACE.//ca
+   if comboDisplayStyle == 1 then
+    resLabelShift = 1.5
+    display static=l_static ribbon rs_ & Select( a_!*_ca.!H & Mol( rs_ ) "n>1" )
+    color ribbon Select( a_!*_ca.N & Mol( rs_ ) "n>1" )
+    if(Nof(Mol(rs_ & a_*.A,N ))>1)  color ribbon rs_ & a_*.A,N molecule
+    display xstick rs_ & Res(a_*.!H) & ( a_!*_ca./cyss,FABCFGLMstepm & ( a_.//!o,n,h*,q* | a_./"P"/n ))
+
+    display xstick rs_ & (a_*_ca. | a_!*_ca./cyss/!o,n,h*,q* | a_*.H,U & a_*.!W//!M5 | a_*.S )
+  #  color xstick rs_ & a_*./!gol,edo,peg,dms,nag,po4,fmt/c* molecule
+    #color xstick rs_ & a_*.A//c* white # a mne tak bol'she nravitsq
+    if( Nof(Res(rs_ & a_*.A,N )) < 30 & Nof(Res(Obj(rs_)))<40 ) display wire rs_ & a_*.A,N
+    display cpk rs_ & a_*.M
+
+   elseif comboDisplayStyle == 2 then
+    display static=l_static ribbon a_!*_ca. & rs_
+    display xstick rs_ & a_*_ca.
+    display xstick rs_ & ( Res( Sphere( rs_ & a_*.H  Obj( rs_ ) ) ) | a_*./cyss/!o,n,h*,q* )
+   elseif comboDisplayStyle == 3 then
+    ribbonColorStyle = 2
+    display static=l_static rs_ wire
+    display xstick rs_ & ( a_*.H | a_*./FA/!ca,c,n,o )
+    display rs_ & Sphere( ( a_*.H | a_*./FA/!ca,c,n,o ) a_*.W 5. )  # show water
+    display xstick rs_ & a_*.A,N//ca,c,n grey
+    if (!l_static) center rs_ & ( a_1/FAB | a_H ) static margin = 10.
+   elseif comboDisplayStyle == 4 then
+    wireStyle = 2
+    atomLabelStyle = 6
+    display static=l_static rs_
+    display atom label rs_
+    keep wireStyle atomLabelStyle
+   else
+    display static=l_static rs_
+   endif
+   display xstick rs_ & Select( a_*.A,N & Mol( rs_ ) "n==1" )  # xstick for single residue molecules
+   display rs_ & a_*.!W & !Res(a_*.//DD)  # to avoid a no show
+   if (l_site) display site rs_ & a_*./FABCDFGLMNtepm
+   display hydrogen # displays hydrogens according to the GRAPHICS.hydrogenDisplay
+ endif
+ delete rs_
+ GRAPHICS.l_redraw = yes
+ display new
+endmacro
+#
+macro dsChemLockDock auto s_tabName s_prefix i_row l_link (yes)
+  dsChemLock_new s_tabName s_prefix i_row l_link
+endmacro
+#
+macro dsChemTemp_new auto s_tabName i_row l_link (yes)
+  l_commands = no
+  l_confirm = no
+  l_info=no
+  interruptAction = "break all loops"
+  #s_objTag = s_tabName + "_tmpmol"
+  s_objTag = "tmpmol"
+  # remove/undisplay previous
+  delete    Select( a_*. s_objTag ) & !Select( a_*. "usedInSlide" )
+  undisplay Select( a_*. s_objTag ) &  Select( a_*. "usedInSlide" ) l_warn = no
+  #
+  s_molCol = "mol"
+  if ( Type( $s_tabName.$s_molCol 2) == "2D" & Type(  $s_tabName.mol3D ) == "parray" & Type(  $s_tabName.mol3D 2 ) == "3D" ) s_molCol = "mol3D"
+  #
+  s_lockObjTag = s_tabName[1:GUI.lockPrefixLength] + "_" + $s_tabName.O [ i_row ]
+  os_lockObj = Select( a_*. s_lockObjTag )
+  #
+  if ( Smiles(  $s_tabName.$s_molCol [i_row] ) != "" ) then
+    if (Nof( os_lockObj ) == 0) then
+      s_objName =  Name( Name( $s_tabName.$s_molCol [ i_row ] )[1] object unique )
+      read mol $s_tabName.$s_molCol [i_row]  name=s_objName l_neutralAcids=yes
+      set field a_ name=s_objTag copy off
+      set field a_ name=s_lockObjTag copy off
+      if (l_link) set property a_ auto
+      set link a_ s_tabName $s_tabName.O [i_row]
+# for Ox
+      if(Type( $s_tabName.symmetry_Int_Tables_number )=="iarray") set symmetry a_ $s_tabName.symmetry_Int_Tables_number [i_row] Rarray( Split(Replace( $s_tabName.cell_length [i_row]+" "+ $s_tabName.cell_angle [i_row]  "(*)" "" ) ))
+# for COD
+      if(Type( $s_tabName.CELL_LENGTH_A )=="rarray") set symmetry a_ $s_tabName.SYMMETRY_SPACE_GROUP_NAME_H_M [i_row] $s_tabName.CELL_LENGTH_A [i_row] // $s_tabName.CELL_LENGTH_B [i_row] // $s_tabName.CELL_LENGTH_C [i_row] // $s_tabName.CELL_ANGLE_ALPHA [i_row] // $s_tabName.CELL_ANGLE_BETA [i_row] // $s_tabName.CELL_ANGLE_GAMMA [i_row]
+# per-atom contribution
+      # if(Type( $s_tabName.ATOM_CONTRIB ) == "parray" & Type( $s_tabName.ATOM_CONTRIB, 1 ) == "rvector") color a_//!h* $s_tabName.ATOM_CONTRIB [i_row]
+#
+    else
+      s_objName =  Name( os_lockObj )[1]
+    endif
+    display xstick a_$s_objName.
+    display hydrogen
+    #
+    if (Type($s_tabName.$s_molCol [i_row] 2) != '2D') then
+      if (Nof(a_$s_objName.//h*) < 1) build hydrogen
+      set type charge mmff a_$s_objName.
+      if Nof( Obj(a_*.A,N//DD) ) >= 1 then
+        make hbond refresh Res(a_$s_objName.//DD) Res(a_*.//DD) name="hbondpairs"
+        if (Nof(hbondpairs)>0) then
+          display hbondpairs Res(a_*.//DD)
+          keep global hbondpairs
+        endif
+      endif
+    endif   # hbond section
+  endif
+endmacro
+#
+macro dsChemLock_new auto s_tabName s_prefix i_row l_link (yes)
+# Notify Donovan about any changes in this macro
+  l_confirm=no
+  l_commands=no
+  l_info=no
+  interruptAction = "break all loops"
+  GRAPHICS.l_redraw=no
+  delete a_tmpmol.
+  s_objTag = s_tabName + "_tmpmol"
+  delete    Select( a_*. s_objTag ) & !Select( a_*. "usedInSlide" )
+  #
+  sel = Index( $s_tabName, selection )
+  if (Nof(sel)==0 & i_row != 0) sel = sel // i_row
+  #
+  if (i_row == 0) sel = Count( Nof( $s_tabName ) )
+  if (Nof(sel)==0) return
+  #
+  s_objTag = s_prefix[1:GUI.lockPrefixLength] + "_" + $s_tabName.O [ sel[1] ]
+
+  os_obj = Select( a_*. s_objTag )
+  l_on = Nof( a_*.//DD & os_obj ) == 0
+  #
+  hasColors   = Type( $s_tabName.KR ) == "iarray"
+  hasScaffold = Type( $s_tabName.scaffold ) == "string"
+  #
+  s_molCol = "mol"
+  if ( Type( $s_tabName.$s_molCol 2) == "2D" & Type(  $s_tabName.mol3D ) == "parray" & Type(  $s_tabName.mol3D 2 ) == "3D" ) s_molCol = "mol3D"
+  #
+  N=Nof(sel)
+  if (N>5) print bar "Progress" N l_info=yes
+  for i=1,Nof(sel)
+    print bar N l_info=yes
+
+    s_objTag = s_prefix[1:GUI.lockPrefixLength] + "_" + $s_tabName.O [ sel[i] ]
+    os_obj = Select( a_*. s_objTag )
+    if Nof(os_obj)==1 then
+      s_objName =  Name( os_obj )[1]
+    else
+      s_objName =  Name( Name( $s_tabName.$s_molCol [ sel[i] ] )[1] object unique )
+
+    endif
+    if l_on then
+      if ( Smiles(  $s_tabName.$s_molCol [sel[i]] ) != "" ) then
+        # if (Nof(os_obj) == 0) then
+          read mol $s_tabName.$s_molCol [sel[i]] name=s_objName l_neutralAcids=yes
+          set field a_ name=s_objTag copy off
+          if (l_link) set property a_ auto
+          set link a_ s_tabName $s_tabName.O [sel[i]]
+        # endif
+        display xstick a_$s_objName.
+        set field a_ name="lockView" copy off
+        display hydrogen
+        if ( hasScaffold ) then
+          find chemical a_ Chemical(  $s_tabName.scaffold mol ) field
+          if Nof( Select( a_// "d1" ) | Select( a_// "d2" ) ) == 2 global make distance refresh Select( a_// "d1" ) Select( a_// "d2" ) display name="distpairs"
+          if Nof( Select( a_// "a1" ) | Select( a_// "a2" ) | Select( a_// "a3" ) ) == 3 global make distance angle refresh Select( a_// "a1" ) Select( a_// "a2" ) Select( a_// "a3" ) display name="angle_list"
+          if Nof( Select( a_// "t1" ) | Select( a_// "t2" ) | Select( a_// "t3" ) | Select( a_// "t4" ) ) == 4 global make distance torsion refresh Select( a_// "t1" ) Select( a_// "t2" ) Select( a_// "t3" ) Select( a_// "t4" ) display name="torsion_list"
+        endif
+        if ( hasColors ) then
+          s_color = Color( system $s_tabName.KR [ sel[i] ] )
+          color xstick a_$s_objName.//c*  $s_color
+        endif
+        # per-atom contribution
+        # if(Type( $s_tabName.ATOM_CONTRIB ) == "parray" & Type( $s_tabName.ATOM_CONTRIB, 1 ) == "rvector") color a_$s_objName.//!h* $s_tabName.ATOM_CONTRIB [ sel[i] ] // -2. // 2.
+        #
+        if (Type($s_tabName.$s_molCol [sel[i]] 2) != '2D') then
+          if (Nof(a_$s_objName.//h*) < 1) build hydrogen
+          set type charge mmff a_$s_objName.
+          if Nof( Obj(a_*.A,N//DD) ) >= 1 then
+            #
+            make hbond refresh Res(a_$s_objName.//DD) Res(a_*.//DD) name="hbondpairs"
+            if (Nof(hbondpairs)>0) then
+              display hbondpairs Res(a_*.//DD)
+              keep global hbondpairs
+            endif
+          endif
+        endif   # hbond section
+      endif
+    else
+      if Nof( Select( a_$s_objName. "usedInSlide" ) )>0 then
+        undisplay a_$s_objName.
+      else
+        delete a_$s_objName.
+      endif
+    endif
+  endfor
+  print bar "End\n" l_info=yes
+  GRAPHICS.l_redraw=yes
+  display new
+endmacro
+#
+macro hbondPrepare os_objects
+  l_info = l_commands = no
+  ms = Mol( os_objects ) & a_!ICM. & a_*.!W
+  if Nof(Atom(ms)) > 0 then
+    build hydrogen Atom( ms ) & a_*.!W//!c* l_warn=no
+    set type mmff ms # & a_*.H
+    if (l_warn) print " Warning> for an optimal orientation of rotatable hydrogens apply convert PDB"
+  endif
+endmacro
+#
+function molSkinGrobName  as_sel
+  return "g_skin_"+Name(Obj(as_sel))[1]+"_"+Name(Mol(as_sel))[1]
+endfunction
+#
+macro toggleGrobSkin as_sel l_on
+  l_commands = l_info = no
+
+  GRAPHICS.l_redraw = no
+
+  as_sel = as_sel & a_*.A,N,H
+
+  if (l_on) then
+
+    ms_sel = Mol(as_sel)
+
+    for i=1,Nof(ms_sel)
+      as_sel1 = as_sel & ms_sel[i]
+      S_linkedGrobs = Name( as_sel1 grob )
+      s_grob = Nof(S_linkedGrobs)>1?S_linkedGrobs[1]:""
+      if (Type( $s_grob ) != "grob") s_grob = ""
+
+      if (s_grob == "" | Nof(Sphere( Xyz($s_grob), as_sel1 )) == 0 ) then
+        if (s_grob != "") delete $s_grob
+        skin_name = molSkinGrobName( as_sel1 )
+        make grob skin Res(as_sel1) Mol(as_sel) skin_name
+        color $skin_name rgb={200,200,200}
+        display $skin_name smooth transparent
+        link $skin_name Mol(as_sel1)
+        keep $skin_name global
+      else
+        for i=1,Nof(S_linkedGrobs)
+          if ( Type( $S_linkedGrobs[i] ) != "grob" ) continue
+          display $S_linkedGrobs[i]
+        endfor
+      endif
+    endfor
+  else
+    S_linkedGrobs = Name( as_sel grob )
+    for i=1,Nof(S_linkedGrobs)
+      if ( Type( $S_linkedGrobs[i] ) != "grob" ) continue
+      undisplay store $S_linkedGrobs[i]
+    endfor
+  endif
+
+  GRAPHICS.l_redraw = yes
+  display new
+
+endmacro
+#
+macro hbondPrepare os_objects
+  l_info = l_commands = no
+  ms = Mol( os_objects ) & a_!ICM. & a_*.!W
+  if Nof(Atom(ms)) > 0 then
+    build hydrogen Atom( ms ) & a_*.!W//!c* l_warn=no
+    set type mmff ms # & a_*.H
+    if (l_warn) print " Warning> for an optimal orientation of rotatable hydrogens apply convert PDB"
+  endif
+endmacro
+#
+macro toggleDisplay as_ s_what l_on
+  if (Nof(as_)==0) as_ = as_graph
+  if (Nof(as_)==0) as_ = Atom( Res( a_//DD ) )
+  if (Nof(as_)==0) as_ = a_//
+  if (s_what == "skin") then
+    toggleGrobSkin as_ l_on
+  elseif (s_what == "hbond") then
+    if (l_on) then
+        if (Nof(as_graph)==0) as_ = a_//DX,DW
+        hbondPrepare Obj( as_ )
+        make hbond refresh Res( as_ ) Res( as_ ) name = "hbondpairs"
+        if (Nof(hbondpairs) > 0) display hbondpairs Res( as_ )
+        if (Nof(hbondpairs) > 0) keep global hbondpairs
+    else
+        if (Nof(hbondpairs) > 0) undisplay hbondpairs Res( as_ )
+    endif
+  elseif (s_what == "map") then
+    ( l_on ? display : undisplay ) map
+  else
+    ( l_on ? display : undisplay ) $s_what as_
+  endif
+endmacro
+#
+macro selectNeighours r_radius l_wholeRes
+  as_graph  =  Sphere( as_graph , !a_*.W & ( !Mol( as_graph ) & ( Obj( as_graph ) | a_*.//DD )),  r_radius)
+  if (l_wholeRes) as_graph = Atom( Res( as_graph ) )
+endmacro
+#
+macro colorSkinByContact as_sel I_clr
+  l_commands = l_info = no
+  GRAPHICS.l_redraw = no
+
+  S_linkedGrobs = Name( Obj(as_sel) grob )
+  S_linkedGrobs = S_linkedGrobs[ Index( S_linkedGrobs, Name( Mol(as_sel) grob ) compare )["A"] ]
+  for i=1,Nof(S_linkedGrobs)
+    color $S_linkedGrobs[i] as_sel rgb=I_clr
+  endfor
+
+  GRAPHICS.l_redraw = yes
+  display new
+endmacro
+#
+macro colorByAtomType as_sel
+  l_commands = l_info = no
+  GRAPHICS.l_redraw = no
+
+  color wire xstick cpk Res(as_sel)
+  S_linkedGrobs = Name( as_sel grob )
+  GROB.atomSphereRadius = 2.
+  for i=1,Nof(S_linkedGrobs)
+    color $S_linkedGrobs[i] white
+    color $S_linkedGrobs[i] as_sel & a_*.//n* blue
+    color $S_linkedGrobs[i] as_sel & a_*.//o* red
+    color $S_linkedGrobs[i] as_sel & a_*.//s* yellow
+    color $S_linkedGrobs[i] as_sel & a_*.//h* grey
+    color $S_linkedGrobs[i] as_sel & a_*.//Cl* chartreuse
+    color $S_linkedGrobs[i] as_sel & a_*.//Br* darkseagreen1
+    color $S_linkedGrobs[i] as_sel & a_*.//i* purple
+  endfor
+
+  GRAPHICS.l_redraw = yes
+  display new
+endmacro
+#
+macro colorBy s_by
+  l_commands = l_info = no
+  as_ = Nof(as_graph)>0?as_graph:a_*.//DD
+  if (s_by == "atom") then
+    color wire xstick cpk as_
+  elseif (s_by == "atomhet") then
+    color wire xstick cpk as_ & a_*.//!c*
+  elseif (s_by == "chain") then
+    color wire xstick cpk molecule as_
+    color ribbon molecule as_
+  elseif (s_by == "NtoC") then
+    display ribbon Res(as_)
+    color ribbon Res(as_) ribbonColorStyle="NtoC"
+  elseif (s_by == "sstruct") then
+    display ribbon Res(as_)
+    color ribbon sstructure Res(as_)
+  elseif (s_by == "bfactor") then
+    color ribbon Res(as_) Trim(Bfactor(Res(as_)),0.,100.)//0.//100.
+    color wire xstick Atom(as_) Trim(Bfactor(Atom(as_)),0.,100.)//0.//100.
+  elseif (s_by == "alignment") then
+    color ribbon Res(as_) alignment
+  endif
+endmacro
+#
+macro colorSelection as_sel I_clr S_what auto
+  l_commands = l_info = no
+  GRAPHICS.l_redraw = no
+
+  if (Index(S_what,"ribbon") != 0) color ribbon Res(as_sel) rgb=I_clr
+  if (Index(S_what,"wire") != 0)   color wire   as_sel rgb=I_clr
+  if (Index(S_what,"xstick") != 0) color xstick as_sel rgb=I_clr
+  if (Index(S_what,"cpk") != 0)    color cpk    as_sel rgb=I_clr
+
+  if (Index(S_what,"skin") != 0) then
+    S_linkedGrobs = Name( Mol(as_sel) grob )
+    icWhole = Nof(Atom(as_sel)) == Nof(Atom(Mol(as_sel)))
+
+    for i=1,Nof(S_linkedGrobs)
+      if (icWhole) then
+        color $S_linkedGrobs[i] rgb=I_clr
+      else
+        color $S_linkedGrobs[i] as_sel rgb=I_clr GROB.atomSphereRadius = 2.
+      endif
+    endfor
+  endif
+
+  GRAPHICS.l_redraw = yes
+  display new
+endmacro
+#
+macro colorBackgroundOrSelection I_rgb S_what
+  l_commands = l_info = no
+  if (Nof(as_graph)==0) then
+     color background rgb=I_rgb
+  else
+     colorSelection as_graph I_rgb S_what
+  endif
+endmacro
+#
+
+alias aHphob ( ($1//c* & !$1//M3,M41) | $1//C1,C2,C3,C4,C5,C40,C41,C90,C92,C95,C97,C245,C248,C251,C253 )
+alias aHbDoAcSel ( (a_//o* & a_//!C73) | a_//C201,C205:207,C213:214,C216:217,C220:223,C225,C228:230,C234:236,C239:241 | ( a_//!C1,C2,C3,C4,C5,C40,C41 & a_//h* ) | a_//C281:295 )
+
+alias aHphobSel ( (a_//c* & !a_//M3,M41) | a_//C1,C2,C3,C4,C5,C40,C41,C90,C92,C95,C97,C245,C248,C251,C253 )
+#

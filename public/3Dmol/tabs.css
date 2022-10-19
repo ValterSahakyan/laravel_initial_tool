@@ -1,0 +1,314 @@
+  #tabsheader ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+    user-select: none;
+	}
+	
+	#tabsheader li {
+		display: inline;
+		border: 1px solid;
+    border-color: white;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    background-color:#efefef;
+		border-bottom-width: 0;
+		margin: 0 0.5em 0 0;
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+    user-select: none;
+	}
+	
+	#tabsheader #selected {
+		padding-bottom: 1px;
+    background-color:white;
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+    user-select: none;
+	}
+  
+  #tabscontent {
+		border: 1px solid;
+    border-color: white;
+    background-color:white;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 20;
+   -webkit-touch-callout: none; /* iOS Safari */
+   -webkit-user-select: none;   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;    /* Konqueror */
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* IE/Edge */
+    user-select: none;
+	}
+
+  table.emptyTable, tr.emptyTable, td.emptyTable {
+	  width: 100%; 
+    border-width: 0px;
+    margin: 0px;
+    padding: 0px;
+    border-collapse:collapse;
+  }
+
+  table.simpleTable, tr.simpleTable, td.simpleTable {
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    border-collapse:collapse;
+    font-size:10;
+  }
+
+  #table-icm {
+	  width: 100%; 
+    border-collapse:collapse;
+    font-family: arial;
+    font-size:14px;   /* change in JS code TOO!!! */
+    table-layout: fixed;
+    /*overflow: scroll;*/
+  }
+
+  #table-icm th {
+    background-color: #AAA;
+    color: white;
+    border:1px solid gray;
+    padding: 5px;
+  }
+
+  #table-icm td {
+    border:1px solid gray;
+    padding: 5px;
+  }
+
+  #table-icm td.currentCell {border:2px solid black; background: #EEE;}
+  
+  #table-icm td:[selected=true]  {background: #EEE}
+  #table-icm td:[selected=false] {background: #FFF}
+
+  /*
+  #table-icm tr:nth-child(even) {background: #EEE}
+  #table-icm tr:nth-child(odd) {background: #FFF}
+  */
+  div.hline
+  {
+    width:100%;
+    background-color:#696969;
+    height:2px;
+  }
+  div.hsplitter
+  {
+    width:100%;
+    background-color:#696969;
+    position: absolute;
+    height:2px;
+    cursor:ns-resize;
+  }
+  div.vsplitter
+  {
+    height:100%;
+    background-color:#696969;
+    position: absolute;
+    width:2px;
+    padding:2px;
+    cursor:ew-resize;
+  }
+  div.tabTools
+  {
+    height:100%;
+    width:20px;
+    background-color: #f1f1f1;
+    padding: 2px; 
+  }
+
+  ul.pmenu {
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    width: 400px; 
+    border: 1px solid #555; 
+    background-color: #f1f1f1;
+  }
+
+  div.filelistcont {
+    overflow-y: auto; 
+    width:  100%; 
+    height: 100%; 
+    background: white;
+    position: relative;
+  }
+
+  table.googledrive {
+    margin: 0; 
+    padding: 0; 
+    background-color: white;
+    border-collapse:collapse;
+    width: 100%;
+  }
+  th.googledrive {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #555;
+    cursor: default;
+    height: 3em;
+    text-align: left;
+    padding: 5px;
+  }
+  td.googledrive {
+    border-bottom: 1px solid #555;
+    cursor: default;
+    height: 3em;
+    padding: 5px;
+    vertical-align: middle;
+  }
+  tr.googledrive[selected] { background-color: #555;  color: white; }
+  tr.googledrive           { background-color: white; color: #555; }
+
+  li.pmenu, td.pmenu { text-decoration: none; font-family: sans-serif; cursor: default; }
+  li.pmenu[disabled=true] { opacity: 0.3; }
+
+  li.pmenu  { padding: 8px 0px 8px 16px; }
+
+  div.gridPropName  { color: #d15b0e; display: table-cell; padding-right: 4px; }
+  div.gridPropValue { display: table-cell; width: 100% }
+
+  div.modalbg {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  div.dialog_header {
+     font-family: sans-serif;   
+     text-align: center;
+     vertical-align: middle;
+     background-color: #696969;
+     color:  white;
+     font-weight: bold;
+     /*font-size: 110%;*/
+     overflow: hidden;
+     height: 1.4em;
+  }
+  div.dialog {
+     font-family: sans-serif;   
+     border: 1px solid #555; 
+     background-color: #f1f1f1;
+  }
+
+  table.dialog_layout {
+     padding: 8px;
+  }
+
+  td.dialog_layout, tr.dialog_layout {
+     padding: 8px;
+  /*   border: 1px solid black; */ /* for debugging */
+  }
+
+  img.icon { 
+    border-radius: 4px; 
+    width:    24px;
+    height:   24px;
+    padding:  1px;
+    cursor: pointer;
+  }
+  img.icon[on=false] { border:2px solid gray; }
+  img.icon[on=true ] { border:2px solid black; }
+  img.icon[disabled=true] {
+    cursor: default;
+    opacity: 0.3;
+  }
+
+  button.icon { 
+    width:    28px;
+    height:   28px;
+    padding:  1px;
+    cursor: pointer;
+  }
+  button.icon[on=false] { border:2px solid gray; }
+  button.icon[on=true ] { border:2px solid black; }
+
+  img.icon16 { 
+    border-radius: 2px; 
+    width:    16px;
+    height:   16px;
+    padding:  1px;
+    cursor: pointer;
+    background: #ccc;
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+  }
+  img.icon16_down { 
+    border-radius: 2px; 
+    width:    16px;
+    height:   16px;
+    padding:  1px;
+    cursor: pointer;
+    background: #bbb;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom: solid 2px #eaeaea;
+    border-right: solid 2px #eaeaea;
+  }
+
+div.tooltip {
+  padding: 5x; 
+  border: 2px solid gray; 
+  position: absolute;
+  border-radius: 5px;
+  background-color: #EFEFEF;
+  z-index: 10;
+}
+
+div.tabsheader2  {
+  border-bottom: 2px solid;
+  padding-bottom: 0px;
+  border-color: #808080;
+}
+
+button.tabsheader2 {
+  display: inline;
+  border: 2px solid;
+  border-color: #808080;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  background-color:#808080;
+  color: white;
+  border-bottom-width: 0;
+  margin: 2px;
+  margin-bottom: 0px;
+  padding: 5px;
+  cursor: pointer;
+  font-family: sans-serif;
+  z-index: 2;
+  outline: none;
+}
+
+button.tabsheader2[selected=true] {
+  background-color:white;
+  color: #808080;
+  margin-bottom: -5px;
+  border: 2px solid;
+  border-bottom-color: white;
+}
+
+div.tabscontent2 {
+  background-color:white;
+  font-family: sans-serif;
+  padding: 5px;
+  overflow: auto;
+  height: 100%;
+}
+
+a.icm {
+  color: #006400;
+  font-weight: bold;
+}
